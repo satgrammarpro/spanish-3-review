@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spanish Review Study Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #4cb5f5;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        h1 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: #e9ecef;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-right: 0.2rem;
+            border-radius: 5px 5px 0 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .tab-btn:hover {
+            background: #dee2e6;
+        }
+        
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 0 5px 5px 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            min-height: 500px;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+            display: none;
+        }
+        
+        .card-content.active {
+            display: block;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        th {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .flashcard {
+            perspective: 1000px;
+            margin: 1rem 0;
+            height: 200px;
+        }
+        
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+        }
+        
+        .flashcard-front {
+            background-color: var(--primary);
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .flashcard-back {
+            background-color: var(--accent);
+            color: white;
+            transform: rotateY(180deg);
+            font-size: 1.2rem;
+        }
+        
+        .quiz-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .quiz-question {
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .quiz-options {
+            display: grid;
+            grid-gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .quiz-option {
+            padding: 0.8rem;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .quiz-option:hover {
+            background: #e9ecef;
+        }
+        
+        .quiz-option input[type="radio"] {
+            margin-right: 10px;
+        }
+        
+        .quiz-option.selected {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+        
+        .quiz-option.correct {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+        
+        .quiz-option.incorrect {
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger);
+        }
+        
+        .btn {
+            padding: 0.8rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-right: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn:hover:not(:disabled) {
+            background: var(--secondary);
+        }
+        
+        .btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        .btn-next {
+            background: var(--success);
+        }
+        
+        .btn-next:hover:not(:disabled) {
+            background: #218838;
+        }
+        
+        .btn-prev {
+            background: var(--accent);
+        }
+        
+        .btn-prev:hover:not(:disabled) {
+            background: #339fdb;
+        }
+        
+        .btn-check {
+            background: var(--primary);
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: var(--success);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .quiz-feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .feedback-correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .feedback-incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .quiz-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+        
+        .section-title {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .vocab-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .spanish {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .english {
+            color: var(--dark);
+        }
+        
+        .conjugation-table {
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+        
+        .conjugation-table th {
+            background: var(--secondary);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--dark);
+            color: white;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab-btn {
+                width: 100%;
+                margin-bottom: 0.2rem;
+                border-radius: 5px;
+            }
+            
+            .tab-content {
+                border-radius: 5px;
+            }
+            
+            .quiz-nav {
+                flex-direction: column;
+            }
+            
+            .btn {
+                margin-bottom: 0.5rem;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .vocab-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Spanish Review Study Guide</h1>
+        <p>Master all the content from your review packet</p>
+    </header>
+    
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="verbs"><i class="fas fa-language"></i> Verbs</button>
+            <button class="tab-btn" data-tab="expressions"><i class="fas fa-comment-dots"></i> Expressions</button>
+            <button class="tab-btn" data-tab="vocabulary"><i class="fas fa-book"></i> Vocabulary</button>
+            <button class="tab-btn" data-tab="grammar"><i class="fas fa-pencil-alt"></i> Grammar</button>
+            <button class="tab-btn" data-tab="practice"><i class="fas fa-brain"></i> Practice</button>
+        </div>
+        
+        <!-- Verbs Tab -->
+        <div class="tab-content active" id="verbs">
+            <h2 class="section-title">Spanish Verbs</h2>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-exchange-alt"></i> Stem-changing Verbs (e-i)</h3>
+                    <span>+</span>
+                </div>
+                <div class="card-content">
+                    <ul>
+                        <li><strong>Pedir</strong> - to ask for</li>
+                        <li><strong>Repetir</strong> - to repeat</li>
+                        <li><strong>Seguir</strong> - to follow</li>
+                        <li><strong>Seguir + presente participio(gerund)</strong> - to continue doing something</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-exclamation-circle"></i> Irregular "Yo" Form Verbs</h3>
+                    <span>+</span>
+                </div>
+                <div class="card-content">
+                    <table>
+                        <tr>
+                            <th>Verb</th>
+                            <th>Yo Form</th>
+                            <th>Meaning</th>
+                        </tr>
+                        <tr>
+                            <td>Merecer</td>
+                            <td>merEzco</td>
+                            <td>to deserve</td>
+                        </tr>
+                        <tr>
+                            <td>Obedecer</td>
+                            <td>obedEzco</td>
+                            <td>to obey</td>
+                        </tr>
+                        <tr>
+                            <td>Ofrecer</td>
+                            <td>ofrEzco</td>
+                            <td>to offer</td>
+                        </tr>
+                        <tr>
+                            <td>Conducir</td>
+                            <td>condUzco</td>
+                            <td>to drive</td>
+                        </tr>
+                        <tr>
+                            <td>Traducir</td>
+                            <td>tradUzco</td>
+                            <td>to translate</td>
+                        </tr>
+                        <tr>
+                            <td>Conocer</td>
+                            <td>conOzco</td>
+                            <td>to know people/places</td>
+                        </tr>
+                        <tr>
+                            <td>Dar</td>
+                            <td>doy</td>
+                            <td>to give</td>
+                        </tr>
+                        <tr>
+                            <td>Hacer</td>
+                            <td>hago</td>
+                            <td>to do/make</td>
+                        </tr>
+                        <tr>
+                            <td>Poner</td>
+                            <td>pongo</td>
+                            <td>to put</td>
+                        </tr>
+                        <tr>
+                            <td>Traer</td>
+                            <td>traigo</td>
+                            <td>to bring</td>
+                        </tr>
+                        <tr>
+                            <td>Salir</td>
+                            <td>salgo</td>
+                            <td>to go out</td>
+                        </tr>
+                        <tr>
+                            <td>Saber</td>
+                            <td>sé</td>
+                            <td>to know facts</td>
+                        </tr>
+                        <tr>
+                            <td>Ver</td>
+                            <td>veo</td>
+                            <td>to see</td>
+                        </tr>
+                        <tr>
+                            <td>Decir</td>
+                            <td>digo</td>
+                            <td>to say/tell</td>
+                        </tr>
+                        <tr>
+                            <td>Venir</td>
+                            <td>vengo</td>
+                            <td>to come</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-list"></i> Regular Verbs (Present Tense)</h3>
+                    <span>+</span>
+                </div>
+                <div class="card-content">
+                    <div class="vocab-grid">
+                        <div class="vocab-item">
+                            <div class="spanish">Ahorrar</div>
+                            <div class="english">To save (money, food, etc)</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Aplaudir</div>
+                            <div class="english">To applaud</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Alquilar</div>
+                            <div class="english">To rent</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Apagar</div>
+                            <div class="english">To turn off</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Arreglar</div>
+                            <div class="english">To fix</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Ayudar</div>
+                            <div class="english">To help</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Bailar</div>
+                            <div class="english">To dance</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Buscar</div>
+                            <div class="english">To look for</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Caminar</div>
+                            <div class="english">To walk</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Cantar</div>
+                            <div class="english">To sing</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Expressions Tab -->
+        <div class="tab-content" id="expressions">
+            <h2 class="section-title">Spanish Expressions</h2>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-smile"></i> ESTAR Expressions</h3>
+                    <span>+</span>
+                </div>
+                <div class="card-content">
+                    <div class="vocab-grid">
+                        <div class="vocab-item">
+                            <div class="spanish">ESTAR TRISTE(S)</div>
+                            <div class="english">to be sad</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">ESTAR CANSADO(A)(S)</div>
+                            <div class="english">to be tired</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">ESTAR PREOCUPADO(A)(S)</div>
+                            <div class="english">to be worried</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">ESTAR ENFERMO(A)(S)</div>
+                            <div class="english">to be sick</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">ESTAR CONTENTO(A)(S)</div>
+                            <div class="english">to be happy</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">ESTAR ENAMORADO(A)(S)</div>
+                            <div class="english">to be in love</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">ESTAR FURIOSO(A)(S)</div>
+                            <div class="english">to be furious</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">ESTAR ABURRIDO(A)(S)</div>
+                            <div class="english">to be bored</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">ESTAR DE BUEN HUMOR</div>
+                            <div class="english">to be in a good mood</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">ESTAR DE MAL HUMOR</div>
+                            <div class="english">to be in a bad mood</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">ESTAR CELOSO(A)(S)</div>
+                            <div class="english">to be jealous</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">ESTAR OCUPADO(A)(S)</div>
+                            <div class="english">to be busy</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">ESTAR MUERTO(A)(S)</div>
+                            <div class="english">to be dead</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">ESTAR EMBARAZADA(S)</div>
+                            <div class="english">to be pregnant</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-star"></i> TENER Expressions</h3>
+                    <span>+</span>
+                </div>
+                <div class="card-content">
+                    <div class="vocab-grid">
+                        <div class="vocab-item">
+                            <div class="spanish">Tener "x" años</div>
+                            <div class="english">to be x years old</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Tener suerte</div>
+                            <div class="english">to be lucky</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Tener que + infinitive</div>
+                            <div class="english">to have to do something</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Tener ganas de + infinitive</div>
+                            <div class="english">to feel like doing something</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Tener calor</div>
+                            <div class="english">to be hot</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Tener frío</div>
+                            <div class="english">to be cold</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Tener hambre</div>
+                            <div class="english">to be hungry</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Tener sed</div>
+                            <div class="english">to be thirsty</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Tener razón</div>
+                            <div class="english">to be right</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Tener cuidado</div>
+                            <div class="english">to be careful</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Tener sueño</div>
+                            <div class="english">to be sleepy</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Tener celos</div>
+                            <div class="english">to be jealous</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Tener vergüenza</div>
+                            <div class="english">to be embarrassed/ashamed</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Tener miedo</div>
+                            <div class="english">to be scared</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Tener la culpa</div>
+                            <div class="english">to be guilty</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Tener prisa</div>
+                            <div class="english">to be in a hurry</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Tener éxito</div>
+                            <div class="english">to be successful</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Tener dolor de</div>
+                            <div class="english">to have pain</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Vocabulary Tab -->
+        <div class="tab-content" id="vocabulary">
+            <h2 class="section-title">Vocabulary</h2>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-user"></i> Body Parts</h3>
+                    <span>+</span>
+                </div>
+                <div class="card-content">
+                    <div class="vocab-grid">
+                        <div class="vocab-item">
+                            <div class="spanish">brazo</div>
+                            <div class="english">arm</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">cuerpo</div>
+                            <div class="english">body</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">oreja</div>
+                            <div class="english">ear</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">ojo</div>
+                            <div class="english">eye</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">cara</div>
+                            <div class="english">face</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">pie/pies</div>
+                            <div class="english">foot/feet</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">dedo</div>
+                            <div class="english">finger</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">pelo</div>
+                            <div class="english">hair</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">mano</div>
+                            <div class="english">hand</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">cabeza</div>
+                            <div class="english">head</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">pierna</div>
+                            <div class="english">leg</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">boca</div>
+                            <div class="english">mouth</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">cuello</div>
+                            <div class="english">neck</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">nariz</div>
+                            <div class="english">nose</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">estómago</div>
+                            <div class="english">stomach</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">diente/dientes</div>
+                            <div class="english">tooth/teeth</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-utensils"></i> Food and Drinks</h3>
+                    <span>+</span>
+                </div>
+                <div class="card-content">
+                    <div class="vocab-grid">
+                        <div class="vocab-item">
+                            <div class="spanish">carne</div>
+                            <div class="english">meat</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">bistec</div>
+                            <div class="english">steak</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">camarones</div>
+                            <div class="english">shrimp</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">pan</div>
+                            <div class="english">bread</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">arroz</div>
+                            <div class="english">rice</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">frijoles</div>
+                            <div class="english">beans</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">pollo</div>
+                            <div class="english">chicken</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">jamón</div>
+                            <div class="english">ham</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">mariscos</div>
+                            <div class="english">seafood</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">pescado</div>
+                            <div class="english">fish</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">tocino</div>
+                            <div class="english">bacon</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">chorizo</div>
+                            <div class="english">sausage</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">lentejas</div>
+                            <div class="english">lentils</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">sopa</div>
+                            <div class="english">soup</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">mantequilla</div>
+                            <div class="english">butter</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">mermelada</div>
+                            <div class="english">jelly/marmalade</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">sal</div>
+                            <div class="english">salt</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">pimienta</div>
+                            <div class="english">pepper</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">huevos</div>
+                            <div class="english">eggs</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">hielo</div>
+                            <div class="english">ice</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">helado</div>
+                            <div class="english">ice cream</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">galleta</div>
+                            <div class="english">cookie</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">panqueque</div>
+                            <div class="english">pancake</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">fideos</div>
+                            <div class="english">noodles</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">leche</div>
+                            <div class="english">milk</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">jugo</div>
+                            <div class="english">juice</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">agua</div>
+                            <div class="english">water</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">café</div>
+                            <div class="english">coffee</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">gaseosa/soda</div>
+                            <div class="english">soda</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">limonada</div>
+                            <div class="english">lemonade</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">té</div>
+                            <div class="english">tea</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Grammar Tab -->
+        <div class="tab-content" id="grammar">
+            <h2 class="section-title">Grammar Rules</h2>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-concierge-bell"></i> Gustar with Nouns</h3>
+                    <span>+</span>
+                </div>
+                <div class="card-content">
+                    <p>To talk about the things that people like, use <strong>gustar + noun</strong>.</p>
+                    
+                    <p><strong>Here's how:</strong></p>
+                    <ul>
+                        <li>If what is liked is singular, use the singular form <strong>gusta</strong>.</li>
+                        <li>If what is liked is plural, use the plural form <strong>gustan</strong>.</li>
+                    </ul>
+                    
+                    <p><strong>Examples:</strong></p>
+                    <ul>
+                        <li>Me gusta el cereal. (I like cereal.)</li>
+                        <li>Me gustan las uvas. (I like grapes.)</li>
+                        <li>Te gusta la sopa. (You like soup.)</li>
+                        <li>Te gustan los jugos. (You like juices.)</li>
+                    </ul>
+                    
+                    <p>Notice that the singular and plural forms of gustar match what is liked, not the person who likes it.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-users"></i> Gustar with People</h3>
+                    <span>+</span>
+                </div>
+                <div class="card-content">
+                    <p>Use <strong>gusta</strong> to talk about what people like to do.</p>
+                    
+                    <p><strong>Structure:</strong> Use phrases like <strong>me gusta + infinitive</strong>.</p>
+                    
+                    <p><strong>Examples:</strong></p>
+                    <ul>
+                        <li>Me gusta dibujar. (I like to draw.)</li>
+                        <li>Te gusta dibujar. (You like to draw.)</li>
+                        <li>Le gusta dibujar. (He/She/You formal like to draw.)</li>
+                        <li>Nos gusta dibujar. (We like to draw.)</li>
+                        <li>Os gusta dibujar. (You all like to draw.)</li>
+                        <li>Les gusta dibujar. (They/You all like to draw.)</li>
+                    </ul>
+                    
+                    <p>When you want to emphasize or identify the person you are talking about, add <strong>a + noun/pronoun</strong>.</p>
+                    
+                    <p><strong>Examples:</strong></p>
+                    <ul>
+                        <li>A Sonia le gusta leer. (Sonia likes to read.)</li>
+                        <li>A mí me gusta dibujar. (I like to draw.)</li>
+                        <li>A ti te gusta dibujar. (You like to draw.)</li>
+                        <li>A usted le gusta dibujar. (You formal like to draw.)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-house-user"></i> Reflexive Verbs</h3>
+                    <span>+</span>
+                </div>
+                <div class="card-content">
+                    <div class="vocab-grid">
+                        <div class="vocab-item">
+                            <div class="spanish">Despertarse (e-ie)</div>
+                            <div class="english">to wake up</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Sentarse (e-ie)</div>
+                            <div class="english">to sit down</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Acostarse (o-ue)</div>
+                            <div class="english">to go to bed</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Dormirse (o-ue)</div>
+                            <div class="english">to fall asleep</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Afeitarse</div>
+                            <div class="english">to shave</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Bañarse</div>
+                            <div class="english">to shower</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Cepillarse</div>
+                            <div class="english">to brush</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Lavarse</div>
+                            <div class="english">to wash</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Peinarse</div>
+                            <div class="english">to comb</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Prepararse</div>
+                            <div class="english">to get ready</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Quitarse</div>
+                            <div class="english">to take off (clothing)</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Secarse</div>
+                            <div class="english">to dry</div>
+                        </div>
+                        <div class="vocab-item">
+                            <div class="spanish">Vestirse (e-i)</div>
+                            <div class="english">to get dressed</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Practice Tab -->
+        <div class="tab-content" id="practice">
+            <h2 class="section-title">Practice Exercises</h2>
+            
+            <div class="quiz-container">
+                <div class="progress-bar">
+                    <div class="progress" id="quiz-progress"></div>
+                </div>
+                
+                <div id="quiz-content">
+                    <div class="quiz-question" id="question-text">
+                        <!-- Question will be inserted here -->
+                    </div>
+                    <div class="quiz-options" id="question-options">
+                        <!-- Options will be inserted here -->
+                    </div>
+                    
+                    <div class="quiz-feedback" id="quiz-feedback">
+                        <!-- Feedback will be inserted here -->
+                    </div>
+                    
+                    <div class="quiz-nav">
+                        <button class="btn btn-prev" id="prev-question" disabled><i class="fas fa-arrow-left"></i> Previous Question</button>
+                        <button class="btn btn-check" id="check-answer"><i class="fas fa-check"></i> Check Answer</button>
+                        <button class="btn btn-next" id="next-question">Next Question <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-id-card"></i> Flashcard Practice</h3>
+                    <span>+</span>
+                </div>
+                <div class="card-content">
+                    <div class="flashcard" id="practice-flashcard">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <p id="flashcard-front-text">Hello</p>
+                            </div>
+                            <div class="flashcard-back">
+                                <p id="flashcard-back-text">Hola</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quiz-nav">
+                        <button class="btn btn-prev" id="prev-flashcard" disabled><i class="fas fa-arrow-left"></i> Previous Card</button>
+                        <button class="btn" onclick="flipCard()"><i class="fas fa-sync-alt"></i> Flip Card</button>
+                        <button class="btn btn-next" id="next-flashcard">Next Card <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Spanish Review Study Guide &copy; 2023</p>
+    </footer>
+
+    <script>
+        // Quiz questions based on the PDF content - 30 questions to help you ace your test!
+        const quizQuestions = [
+            {
+                question: "What is the 'yo' form of the verb 'tener'?",
+                options: ["tengo", "tienes", "tiene", "tenemos"],
+                correctAnswer: 0
+            },
+            {
+                question: "Which verb means 'to ask for'?",
+                options: ["pedir", "repetir", "seguir", "merecer"],
+                correctAnswer: 0
+            },
+            {
+                question: "What does 'estar cansado' mean?",
+                options: ["to be tired", "to be happy", "to be sad", "to be busy"],
+                correctAnswer: 0
+            },
+            {
+                question: "Which expression means 'to be in a hurry'?",
+                options: ["tener prisa", "tener sueño", "tener hambre", "tener sed"],
+                correctAnswer: 0
+            },
+            {
+                question: "What is the Spanish word for 'to work'?",
+                options: ["trabajar", "estudiar", "cantar", "bailar"],
+                correctAnswer: 0
+            },
+            {
+                question: "Which verb is a stem-changing verb (e-i)?",
+                options: ["pedir", "tener", "estar", "ser"],
+                correctAnswer: 0
+            },
+            {
+                question: "What does 'tener ganas de' mean?",
+                options: ["to feel like doing something", "to have to do something", "to be lucky", "to be careful"],
+                correctAnswer: 0
+            },
+            {
+                question: "Which of these means 'to take out the trash'?",
+                options: ["sacar la basura", "lavar los platos", "cortar el césped", "hacer la cama"],
+                correctAnswer: 0
+            },
+            {
+                question: "What is the Spanish word for 'apple'?",
+                options: ["manzana", "naranja", "pera", "fresa"],
+                correctAnswer: 0
+            },
+            {
+                question: "Which verb means 'to follow' or 'to continue'?",
+                options: ["seguir", "pedir", "repetir", "conducir"],
+                correctAnswer: 0
+            },
+            {
+                question: "What is the 'yo' form of the verb 'conocer'?",
+                options: ["conozco", "conoces", "conoce", "conocemos"],
+                correctAnswer: 0
+            },
+            {
+                question: "Which of these means 'to be worried'?",
+                options: ["estar preocupado", "estar cansado", "estar enfermo", "estar ocupado"],
+                correctAnswer: 0
+            },
+            {
+                question: "What does 'tener razón' mean?",
+                options: ["to be right", "to be wrong", "to be hungry", "to be thirsty"],
+                correctAnswer: 0
+            },
+            {
+                question: "Which verb means 'to bring'?",
+                options: ["traer", "llevar", "tomar", "poner"],
+                correctAnswer: 0
+            },
+            {
+                question: "What is the Spanish word for 'strawberry'?",
+                options: ["fresa", "manzana", "naranja", "uza"],
+                correctAnswer: 0
+            },
+            {
+                question: "Which expression means 'to be lucky'?",
+                options: ["tener suerte", "tener miedo", "tener calor", "tener frío"],
+                correctAnswer: 0
+            },
+            {
+                question: "What is the 'yo' form of the verb 'salir'?",
+                options: ["salgo", "sales", "sale", "salimos"],
+                correctAnswer: 0
+            },
+            {
+                question: "Which verb means 'to say' or 'to tell'?",
+                options: ["decir", "hablar", "contar", "preguntar"],
+                correctAnswer: 0
+            },
+            {
+                question: "What does 'tener cuidado' mean?",
+                options: ["to be careful", "to be scared", "to be right", "to be wrong"],
+                correctAnswer: 0
+            },
+            {
+                question: "Which of these means 'to make the bed'?",
+                options: ["hacer la cama", "lavar la ropa", "cortar el césped", "planchar"],
+                correctAnswer: 0
+            },
+            {
+                question: "What is the Spanish word for 'chicken'?",
+                options: ["pollo", "pescado", "carne", "jamón"],
+                correctAnswer: 0
+            },
+            {
+                question: "Which verb means 'to know' (facts or information)?",
+                options: ["saber", "conocer", "entender", "aprender"],
+                correctAnswer: 0
+            },
+            {
+                question: "What does 'tener miedo' mean?",
+                options: ["to be scared", "to be careful", "to be right", "to be wrong"],
+                correctAnswer: 0
+            },
+            {
+                question: "What is the 'yo' form of the verb 'hacer'?",
+                options: ["hago", "haces", "hace", "hacemos"],
+                correctAnswer: 0
+            },
+            {
+                question: "Which of these means 'to wash the dishes'?",
+                options: ["lavar los platos", "sacar la basura", "cocinar", "limpiar el baño"],
+                correctAnswer: 0
+            },
+            {
+                question: "What is the Spanish word for 'rice'?",
+                options: ["arroz", "frijoles", "pan", "sopa"],
+                correctAnswer: 0
+            },
+            {
+                question: "Which expression means 'to be thirsty'?",
+                options: ["tener sed", "tener hambre", "tener sueño", "tener calor"],
+                correctAnswer: 0
+            },
+            {
+                question: "What is the 'yo' form of the verb 'poner'?",
+                options: ["pongo", "pones", "pone", "ponemos"],
+                correctAnswer: 0
+            },
+            {
+                question: "Which verb means 'to leave' or 'to go out'?",
+                options: ["salir", "venir", "ir", "partir"],
+                correctAnswer: 0
+            },
+            {
+                question: "What does 'tener éxito' mean?",
+                options: ["to be successful", "to be lucky", "to be right", "to be careful"],
+                correctAnswer: 0
+            }
+        ];
+
+        // Flashcard content based on the PDF vocabulary
+        const flashcards = [
+            { front: "Pedir", back: "To ask for" },
+            { front: "Repetir", back: "To repeat" },
+            { front: "Seguir", back: "To follow" },
+            { front: "Merecer", back: "To deserve" },
+            { front: "Obedecer", back: "To obey" },
+            { front: "Ofrecer", back: "To offer" },
+            { front: "Conducir", back: "To drive" },
+            { front: "Traducir", back: "To translate" },
+            { front: "Conocer", back: "To know people/places" },
+            { front: "Estar triste", back: "To be sad" },
+            { front: "Estar cansado", back: "To be tired" },
+            { front: "Estar preocupado", back: "To be worried" },
+            { front: "Tener suerte", back: "To be lucky" },
+            { front: "Tener calor", back: "To be hot" },
+            { front: "Tener frío", back: "To be cold" },
+            { front: "Tener hambre", back: "To be hungry" },
+            { front: "Tener sed", back: "To be thirsty" },
+            { front: "Tener razón", back: "To be right" },
+            { front: "Pasar la aspiradora", back: "To vacuum" },
+            { front: "Sacar la basura", back: "To take out the trash" },
+            { front: "Lavar los platos", back: "To wash the dishes" },
+            { front: "Cortar el césped", back: "To cut the grass" },
+            { front: "Hacer la cama", back: "To make the bed" },
+            { front: "Manzana", back: "Apple" },
+            { front: "Naranja", back: "Orange" },
+            { front: "Fresa", back: "Strawberry" },
+            { front: "Plátano", back: "Banana" },
+            { front: "Uva", back: "Grape" },
+            { front: "Pollo", back: "Chicken" },
+            { front: "Pescado", back: "Fish" }
+        ];
+
+        let currentQuestion = 0;
+        let currentFlashcard = 0;
+        let userAnswers = new Array(quizQuestions.length).fill(null);
+
+        // Initialize the quiz
+        function initQuiz() {
+            showQuestion(currentQuestion);
+            updateProgressBar();
+            updateNavButtons();
+        }
+
+        // Display a question
+        function showQuestion(index) {
+            const question = quizQuestions[index];
+            const questionElement = document.getElementById('question-text');
+            const optionsElement = document.getElementById('question-options');
+            const feedbackElement = document.getElementById('quiz-feedback');
+            
+            // Hide feedback
+            feedbackElement.style.display = 'none';
+            
+            // Set question text
+            questionElement.textContent = `${index + 1}. ${question.question}`;
+            
+            // Clear previous options
+            optionsElement.innerHTML = '';
+            
+            // Add new options
+            question.options.forEach((option, i) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'quiz-option';
+                if (userAnswers[index] === i) {
+                    optionElement.classList.add('selected');
+                }
+                
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = 'quiz-option';
+                radio.value = i;
+                radio.id = `option-${i}`;
+                radio.checked = userAnswers[index] === i;
+                
+                // Make the entire option clickable
+                optionElement.addEventListener('click', () => {
+                    // Remove selected class from all options
+                    document.querySelectorAll('.quiz-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to this option
+                    optionElement.classList.add('selected');
+                    
+                    // Check the radio button
+                    radio.checked = true;
+                    
+                    // Store the user's answer
+                    userAnswers[index] = i;
+                });
+                
+                const label = document.createElement('label');
+                label.htmlFor = `option-${i}`;
+                label.textContent = option;
+                
+                optionElement.appendChild(radio);
+                optionElement.appendChild(label);
+                optionsElement.appendChild(optionElement);
+            });
+            
+            // Update navigation buttons
+            updateNavButtons();
+        }
+
+        // Update navigation button states
+        function updateNavButtons() {
+            document.getElementById('prev-question').disabled = currentQuestion === 0;
+            document.getElementById('next-question').disabled = currentQuestion === quizQuestions.length - 1;
+            document.getElementById('prev-flashcard').disabled = currentFlashcard === 0;
+            document.getElementById('next-flashcard').disabled = currentFlashcard === flashcards.length - 1;
+        }
+
+        // Check the current answer
+        function checkAnswer() {
+            const userAnswer = userAnswers[currentQuestion];
+            const correctAnswer = quizQuestions[currentQuestion].correctAnswer;
+            const feedbackElement = document.getElementById('quiz-feedback');
+            
+            if (userAnswer === null) {
+                feedbackElement.textContent = "Please select an answer.";
+                feedbackElement.className = "quiz-feedback feedback-incorrect";
+                feedbackElement.style.display = 'block';
+                return;
+            }
+            
+            // Show if the answer is correct or not
+            if (userAnswer === correctAnswer) {
+                feedbackElement.textContent = "Correct! Well done.";
+                feedbackElement.className = "quiz-feedback feedback-correct";
+            } else {
+                feedbackElement.textContent = `Incorrect. The correct answer is: ${quizQuestions[currentQuestion].options[correctAnswer]}`;
+                feedbackElement.className = "quiz-feedback feedback-incorrect";
+            }
+            
+            feedbackElement.style.display = 'block';
+        }
+
+        // Navigate to next question
+        function nextQuestion() {
+            if (currentQuestion < quizQuestions.length - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+                updateProgressBar();
+            }
+        }
+
+        // Navigate to previous question
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+                updateProgressBar();
+            }
+        }
+
+        // Update progress bar
+        function updateProgressBar() {
+            const progress = ((currentQuestion + 1) / quizQuestions.length) * 100;
+            document.getElementById('quiz-progress').style.width = `${progress}%`;
+        }
+
+        // Flashcard functionality
+        function flipCard() {
+            const flashcard = document.getElementById('practice-flashcard');
+            flashcard.classList.toggle('flipped');
+        }
+
+        function updateFlashcard() {
+            document.getElementById('flashcard-front-text').textContent = flashcards[currentFlashcard].front;
+            document.getElementById('flashcard-back-text').textContent = flashcards[currentFlashcard].back;
+            
+            // Reset flip state
+            const flashcard = document.getElementById('practice-flashcard');
+            flashcard.classList.remove('flipped');
+            
+            // Update navigation buttons
+            updateNavButtons();
+        }
+
+        function nextFlashcard() {
+            if (currentFlashcard < flashcards.length - 1) {
+                currentFlashcard++;
+                updateFlashcard();
+            }
+        }
+
+        function prevFlashcard() {
+            if (currentFlashcard > 0) {
+                currentFlashcard--;
+                updateFlashcard();
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set up event listeners
+            document.getElementById('check-answer').addEventListener('click', checkAnswer);
+            document.getElementById('next-question').addEventListener('click', nextQuestion);
+            document.getElementById('prev-question').addEventListener('click', prevQuestion);
+            document.getElementById('next-flashcard').addEventListener('click', nextFlashcard);
+            document.getElementById('prev-flashcard').addEventListener('click', prevFlashcard);
+            
+            // Initialize quiz and flashcards
+            initQuiz();
+            updateFlashcard();
+            
+            // Tab functionality
+            document.querySelectorAll('.tab-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const tab = button.dataset.tab;
+                    
+                    // Update active tab button
+                    document.querySelectorAll('.tab-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    button.classList.add('active');
+                    
+                    // Update active tab content
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    document.getElementById(tab).classList.add('active');
+                });
+            });
+            
+            // Card accordion functionality
+            document.querySelectorAll('.card-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const isActive = content.classList.contains('active');
+                    
+                    // Close all card contents
+                    document.querySelectorAll('.card-content').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    document.querySelectorAll('.card-header span').forEach(span => {
+                        span.textContent = '+';
+                    });
+                    
+                    // Open clicked card if it wasn't already active
+                    if (!isActive) {
+                        content.classList.add('active');
+                        header.querySelector('span').textContent = '-';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
